@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+      .view {
+        display: none;
+      }
+    </style>
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+
+    <div id="app">
+      <div id="userView" class="view">
+        <div class="form-group">
+          <label><h5>Woher kommst Du?</h5></label>
+          <select class="form-control" name="place" id="place">
+            <option value="0">keine Angaben</option>
+            <option value="1">Wien</option>
+            <option value="2">Nieder&ouml;sterreich</option>
+            <option value="3">Ober&ouml;sterreich</option>
+            <option value="4">Salzburg</option>
+            <option value="5">Steiermark</option>
+            <option value="6">K&auml;rnten</option>
+            <option value="7">Tirol</option>
+            <option value="8">Burgenland</option>
+            <option value="9">Vorarlberg</option>
+            <option value="10">Sonstiges</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><h5>Dein Alter</h5></label>
+          <select class="form-control" name="age" id="age">
+            <option value="0">keine Angaben</option>
+            <option value="1">bis 16</option>
+            <option value="2">16-24</option>
+            <option value="3">25-34</option>
+            <option value="4">35-50</option>
+            <option value="5">50-65</option>
+            <option value="6">ab 65</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><h5>Welche Partei wirst Du w&auml;hlen?</h5></label>
+          <select class="form-control" name="preference" id="preference">
+            <option value="0">keine Angaben</option>
+            <option value="1">&Ouml;VP</option>
+            <option value="2">SP&Ouml;</option>
+            <option value="3">FP&Ouml;</option>
+            <option value="4">NEOS</option>
+            <option value="5">JETZT</option>
+            <option value="6">GR&Uuml;NE</option>
+            <option value="7">KP&Ouml;</option>
+            <option value="8">WANDL</option>
+            <option value="9">Sonstige</option>
+          </select>
+        </div>
+        <button id="submitUserData" type="submit" class="btn btn-lg btn-wahlorama d-none d-sm-inline">weiter zum Voting</button>
+      </div>
+      <div id="voteView" class="view">
+        <small><span id="voteId">x</span>. <span id="voteThese1">x</span></small>
+        <h1 class="cover-heading font-roboto" id="voteThese2">x</h1>
+        <p class="lead"><br/></p>
+        <footer class="mastfoot mt-auto">
+          <p class="lead d-none d-sm-block">
+            <a href="#" data-answer="1" class="voteSubmit btn btn-lg btn-abstimmung"><i class="fas fa-sad-cry fa-2x"></i><br/><span class="small font-roboto">1</span></a>
+            <a href="#" data-answer="2" class="voteSubmit btn btn-lg btn-abstimmung"><i class="fas fa-frown fa-2x"></i><br/><span class="small font-roboto">2</span></a>
+            <a href="#" data-answer="3" class="voteSubmit btn btn-lg btn-abstimmung"><i class="fas fa-meh-rolling-eyes fa-2x"></i><br/><span class="small font-roboto">3</span></a>
+            <a href="#" data-answer="4" class="voteSubmit btn btn-lg btn-abstimmung"><i class="fas fa-meh fa-2x"></i><br/><span class="small font-roboto">4</span></a>
+            <a href="#" data-answer="5" class="voteSubmit btn btn-lg btn-abstimmung"><i class="fas fa-smile fa-2x"></i><br/><span class="small font-roboto">5</span></a>
+            <a href="#" data-answer="6" class="voteSubmit btn btn-lg btn-abstimmung"><i class="fas fa-grin-hearts fa-2x"></i><br/><span class="small font-roboto">6</span></a>
+          </p>
+
+          <p class="lead d-block d-sm-none">
+            <a href="#" data-answer="1" class="voteSubmit btn btn-md btn-abstimmung"><i class="fas fa-sad-cry"></i><br/><span class="small font-roboto">1</span></a>
+            <a href="#" data-answer="2" class="voteSubmit btn btn-md btn-abstimmung"><i class="fas fa-frown"></i><br/><span class="small font-roboto">2</span></a>
+            <a href="#" data-answer="3" class="voteSubmit btn btn-md btn-abstimmung"><i class="fas fa-meh-rolling-eyes"></i><br/><span class="small font-roboto">3</span></a>
+            <a href="#" data-answer="4" class="voteSubmit btn btn-md btn-abstimmung"><i class="fas fa-meh"></i><br/><span class="small font-roboto">4</span></a>
+            <a href="#" data-answer="5" class="voteSubmit btn btn-md btn-abstimmung"><i class="fas fa-smile"></i><br/><span class="small font-roboto">5</span></a>
+            <a href="#" data-answer="6" class="voteSubmit btn btn-md btn-abstimmung"><i class="fas fa-grin-hearts"></i><br/><span class="small font-roboto">6</span></a>
+          </p>
+          <p class="small"><span class="text-left">&larr; stimme nicht zu</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stimme zu &rarr;</span></p>
+          <!-- todo: progress bar etc. -->
+        </footer>
+      </div>
+      <div id="resultView" class="view">
+        resultView
+      </div>
+    </div>
+
+    <script>
+      var views = {
+        userView: document.getElementById('userView'),
+        voteView: document.getElementById('voteView'),
+        resultView: document.getElementById('resultView'),
+      };
+
+      var voteQuestions = [
+        {
+          these1: 'Steuern',
+          these2: 'Österreich soll eine CO2-Steuer einführen',
+        },
+        {
+          these1: 'Infrastruktur',
+          these2: 'Es soll ein österreichweites Ticket für alle öffentlichen Verkehrsmittel eingeführt werden',
+        }
+      ];
+
+      // functions
+      //todo: url history rewriting stuff
+      function displayView(viewNameToShow) {
+        // hide all views
+        Object.keys(views).forEach(viewName => {
+          views[viewName].style.display = 'none';
+        });
+        // show only one
+        document.getElementById(viewNameToShow).style.display = 'block';
+      }
+
+      function saveSelectFormById(id) {
+        var selectElement = document.getElementById(id);
+        var value = selectElement.options[selectElement.selectedIndex].value;
+        localStorage.setItem(id, value);
+      }
+
+      function saveUserData() {
+        saveSelectFormById('place');
+        saveSelectFormById('age');
+        saveSelectFormById('preference');
+        // todo: random session key? save ip? userAgent? as a hash for privacy?
+      }
+
+      function setVoteData(voteId) {
+        var currentData = voteQuestions[voteId];
+        document.getElementById('voteId').textContent = (voteId + 1);
+        document.getElementById('voteThese1').textContent = currentData.these1;
+        document.getElementById('voteThese2').textContent = currentData.these2;
+      }
+
+      function saveVoteData(voteId, answer) {
+        localStorage.setItem(`vote_${voteId}`, answer);
+      }
+
+      function sendData() {
+        var data = {
+          place: localStorage.getItem('place'),
+          age: localStorage.getItem('age'),
+          preference: localStorage.getItem('preference'),
+          // todo: more data?
+          votes: [],
+        };
+        for (var i = 0; i < voteQuestions.length; i++) {
+          data.votes[i] = localStorage.getItem(`vote_${i}`);
+        }
+        console.log(data);
+        // todo: send user and vote data to server
+
+      }
+
+      // run
+      var currentVoteId = 0;
+      //todo: start from correct url/history
+      //todo: prefill answers from local storage
+      displayView('userView');
+
+      document.getElementById('submitUserData').addEventListener('click', function() {
+        saveUserData();
+        setVoteData(currentVoteId);
+        displayView('voteView');
+      });
+
+      var submitElements = document.getElementsByClassName('voteSubmit');
+      Array.prototype.forEach.call(submitElements, function(submitElement) {
+        submitElement.addEventListener('click', function (event) {
+          event.preventDefault();
+          saveVoteData(currentVoteId, event.currentTarget.dataset.answer);
+          currentVoteId += 1;
+          if (currentVoteId < voteQuestions.length) {
+            setVoteData(currentVoteId);
+            return;
+          }
+          displayView('resultView');
+          sendData();
+        });
+      });
+    </script>
+  </body>
+</html>
